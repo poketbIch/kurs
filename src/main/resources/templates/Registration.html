@@ -1,0 +1,85 @@
+
+
+<title>Title</title>
+
+
+
+<style>
+    div.scroll {
+
+        width: 600px;
+        height: 150px;
+        overflow: auto;
+        text-align: justify;
+        padding: 20px;
+    }
+</style>
+<div th:insert="header :: headerBase"></div>
+
+<body class="bg-gray-800">
+
+
+<div class="">
+    <div class="scroll card-body p-5 text-center card shadow-2-strong col-12 col-md-8 col-lg-6 col-xl-5 d-flex justify-content-center align-items-center h-100 container py-5 h-100 vh-100" >
+
+        <div th:if="${param.error}">
+            Пользователь уже существует
+        </div>
+        <p th:text="${error}"></p>
+
+        <form th:action="'/Registration'" method="post" th:object="${user}">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example3">Логин</label>
+                <input type="text" id="form3Example3" class="form-control form-control-lg"
+                       placeholder="Введите логин" name="username"/>
+
+            </div>
+            <div th:object="${user}" th:if="${#fields.hasErrors()}" th:errors="*{username}" style="color:red"></div><br>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example3">Телефон</label>
+                <input type="text" id="form4Example4" class="form-control form-control-lg"
+                       placeholder="Введите телефон" name="phonenumber"/>
+
+            </div>
+            <div th:object="${user}" th:if="${#fields.hasErrors()}" th:errors="*{phonenumber}" style="color:red"></div><br>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example4">Пароль</label>
+                <input type="password" id="form3Example4" class="form-control form-control-lg"
+                       placeholder="Введите пароль" name="password"/>
+
+            </div>
+            <div th:object="${user}" th:if="${#fields.hasErrors()}" th:errors="*{password}"  style="color:red"></div><br>
+<!--            <div class="form-outline mb-4">-->
+<!--                <label class="form-label" for="form3Example5">Почта</label>-->
+<!--                <input type="text" id="form3Example5" class="form-control form-control-lg"-->
+<!--                       placeholder="Введите почту (опционально)" name="email"/>-->
+
+<!--            </div>-->
+
+<!--            <div th:if="${#fields.hasErrors()}" th:errors="*{email}" style="color:red"></div><br>-->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example7">Имя</label>
+                <input type="text" id="form3Example7" class="form-control form-control-lg"
+                       placeholder="Введите имя" name="name"/>
+
+            </div>
+            <div th:if="${#fields.hasErrors()}" th:errors="*{name}" style="color:red"></div><br>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example8">Фамилия</label>
+                <input type="text" id="form3Example8" class="form-control form-control-lg"
+                       placeholder="Введите фамилию" name="surname"/>
+
+            </div>
+            <div th:if="${#fields.hasErrors()}" th:errors="*{surname}" style="color:red"></div><br>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example9">Отчество</label>
+                <input type="text" id="form3Example9" class="form-control form-control-lg"
+                       placeholder="Введите отчество (при наличии)" name="patronymic"/>
+
+            </div>
+            <div th:if="${#fields.hasErrors()}" th:errors="*{patronymic}" style="color:red"></div><br>
+            <div><input type="submit" value="Зарегистрироваться" class="btn btn-success"></div>
+        </form>
+    </div>
+</div>
+</body>

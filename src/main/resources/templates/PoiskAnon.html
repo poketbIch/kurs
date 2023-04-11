@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="header :: headerBase"></div>
+<body class="bg-gray-800">
+
+<div class="self-center ">
+  <form class="d-flex w-full" th:action="'/PoiskAnon/AnonClientSearchName/'+${item.name}" method="get">
+    <i class="material-icons prefix" style=" color: ghostwhite">search</i>
+    <input type="search" id="searchName" name="name" placeholder="Поиск по Каталогу" class="form-control me-2" style="">
+    <input class="btn blue" type="submit" value="Найти" style="color: ghostwhite">
+  </form>
+
+  <a href="/"> </a>
+
+
+  <i class="material-icons prefix" style=" color: #1f2937">search</i>
+  <button class="btn btn-secondary dropdown-toggle dropdown" type="button" data-toggle="dropdown">Найти товар по категории
+    <span class="caret"></span></button>
+  <ul class="dropdown-menu" >
+    <li th:each="el: ${listCategory}" id="">   <a style="text-decoration: none; "  th:href="'/PoiskAnon/AnonClientSearch/'+${el.categoryName}" th:text="${el.categoryName}"></a></li>
+
+  </ul>
+</div>
+<div class="row mb-5 text-center" >
+
+
+  <div class="col-5 themed-grid-col card shadow-3-strong container" th:each="el: ${listItem}" id="items" >
+
+    <h3>Наименование товара</h3>
+    <p th:text="*{el.name}" ><br>
+    <h3>Цена</h3>
+    <p th:text="*{el.Cost}"  ><br>
+    <h3>Бренд</h3>
+    <p th:text="*{el.brand}"  ><br>
+    <h3>Размер</h3>
+    <p th:text="*{el.length}"   ><br>
+    <h3>Описание</h3>
+    <p th:text="*{el.description}"   ><br>
+    <h3>Цвет</h3>
+    <p th:text="*{el.color}"   ><br>
+    <h3>Артикул</h3>
+    <p th:text="*{el.articul}"   ><br>
+    <h3>Профессионализм</h3>
+    <p th:text="*{el.professionalism}" ><br>
+    <h3>Год выпуска</h3>
+    <p th:text="*{el.releaseYear}"  ><br>
+    <h5 class="">
+      Склад
+    </h5>
+    <p th:text="*{el.storage.adresStorage}"  ><br>
+    <h5 class="">
+      Категория
+    </h5>
+    <p th:text="*{el.category.categoryName}"  ><br>
+
+
+  </div>
+</div>
+
+</div>
+
+
+</body>
+</html>

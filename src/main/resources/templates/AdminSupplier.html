@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="header :: headerAdmin"></div>
+
+
+
+
+<body class="bg-gray-800">
+
+<div class="container  card-body text-center  align-items-center card shadow-2-strong ">
+    <div class="modal" id="addsupplier">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Добавление поставщика</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <form method="post" th:action="'/AdminSupplier/SupplierAdd/'" id="checkDataAdd">
+                        <h3>Контактное лицо</h3>
+                        <input th:field="*{supplier.contactInfo}"  type="text" placeholder="Контактное лицо"  name="contactInfo" minlength="0" maxlength="100" required ><br>
+
+                        <h3>Контактный телефон</h3>
+                        <input th:field="*{supplier.phoneNumber}"  type="text" placeholder="Контактный телефон"  name="phoneNumber"   pattern="^($|[0-9]{11})" required ><br>
+
+                        <br>
+                        <button type="submit" class="btn btn-danger"  >Добавить поставщика</button>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <table class="table table-hover table-light">
+        <thead>
+        <tr>
+            <td>
+                Контактное лицо
+
+            </td>
+            <td>
+
+                Контактный телефон
+            </td>
+
+            <td >
+
+            </td>
+            <td >
+
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <a  class="btn btn-success "   data-toggle="modal" th:data-target="${'#addsupplier'}" > Добавить поставщика</a>
+        <div  class="row form-outline" th:each="el: ${listSupplier}">
+            <tr>
+
+                <td > <p   th:text="${el.contactInfo}"> </p></td>
+
+                <td > <p   th:text="${el.phoneNumber}"> </p></td>
+
+                <td class="col">   <a  class="btn btn-success edit"   data-toggle="modal" th:data-target="${'#editsupplier'+el.id}" > Изменить поставщика</a></td>
+
+                <td class="col">   <a  class="btn btn-warning "   data-toggle="modal" th:data-target="${'#deletesupplier'+el.id}" > Удалить поставщика</a></td>
+                <div class="modal fade" th:id="${'editsupplier'+el.id}" role="dialog">
+                    <input type="hidden" id="id" th:value="${el.id}">
+                    <div class="modal-dialog" >
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Изменение поставщика</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+                                <form method="post" th:action="'/AdminSupplier/SupplierEdit/'+${el.id}">
+                                    <h3>Контактное лицо</h3>
+                                    <input th:value="*{el.contactInfo}"  type="text" placeholder="Контактное лицо"  name="contactInfo" minlength="0" maxlength="100" required><br>
+                                    <h3>Контактный телефон</h3>
+                                    <input th:value="*{el.phoneNumber}"  type="text" placeholder="Контактный телефон"  name="phoneNumber" minlength="0"  pattern="^($|[0-9]{11})" required><br>
+
+                                    <button type="submit" class="btn btn-danger"  >Изменить поставщика</button>
+
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal" th:id="${'deletesupplier'+el.id}">
+
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Вы действительно хотите удалить поставщика?</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+
+                                <h5 class="">
+                                    Контактное лицо
+                                </h5>
+                                <p   th:text="${el.contactInfo}"> </p>
+                                <h5 class="">
+                                    Контактный телефон
+                                </h5>
+                                <p   th:text="${el.phoneNumber}"> </p>
+
+                                <form method="post" th:action="'/AdminSupplier/SupplierDelete/' +${el.id}">
+                                    <input type="submit" class="btn btn-danger" value="Удалить"></input>
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </tr>
+        </div>
+
+
+        </tbody>
+    </table>
+
+</div>
+
+</div>
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+<!--<script type="text/javascript" src='<c:url value="/resources/js/jquery-1.9.1.js" />'></script>-->
+<!--<script type="text/javascript" src='<c:url value="/resources/js/bootstrap.js" />'></script>-->
+
+</body>
+</html>

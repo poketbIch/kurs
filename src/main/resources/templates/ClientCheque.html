@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="header :: headerClient"></div>
+<body class="bg-gray-800">
+
+<div class="row mb-5 text-center" >
+
+
+  <div class="col-5 themed-grid-col card shadow-3-strong container" th:each="el: ${listCheque}" id="items" >
+
+    <h3>Дата заказа</h3>
+    <p th:text="*{el.date_of_order}" ><br>
+    <h3>Сумма</h3>
+    <p th:text="*{el.summary}" ><br>
+    <h3>ИНН</h3>
+    <p th:text="*{el.INN}" ><br>
+    <h3>Номер телефона компании</h3>
+    <p th:text="*{el.phoneNumber}" ><br>
+
+</div>
+</div>
+
+
+
+</body>
+</html>

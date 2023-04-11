@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="header :: headerAdmin"></div>
+
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>-->
+
+<body class="bg-gray-800">
+
+<div class="container  card-body text-center  align-items-center card shadow-2-strong ">
+    <div class="modal" id="addcategory">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Добавление категории</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <form method="post" th:action="'/AdminCategory/CategoryAdd/'" id="checkDataAdd">
+                        <h3>Наименование категории</h3>
+                        <input th:field="*{trueCategory.categoryName}"type="text"  placeholder="Категория"  name="categoryName"  minlength="0" maxlength="70" required><br>
+
+
+                        <br>
+                        <button type="submit" class="btn btn-danger"  >Добавить категорию</button>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <table class="table table-hover table-light">
+        <thead>
+        <tr>
+            <td>
+              Категория
+
+            </td>
+            <td>
+
+
+            </td>
+
+            <td >
+
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <a  class="btn btn-success "   data-toggle="modal" th:data-target="${'#addcategory'}" > Добавить категорию</a>
+        <div  class="row form-outline" th:each="el: ${listCategory}">
+            <tr>
+                <td > <p   th:text="${el.categoryName}"> </p></td>
+
+
+                <td class="col">   <a  class="btn btn-success edit"   data-toggle="modal" th:data-target="${'#editcategory'+el.id}" > Изменить категорию</a></td>
+
+                <td class="col">   <a  class="btn btn-warning "   data-toggle="modal" th:data-target="${'#deletecategory'+el.id}" > Удалить категорию</a></td>
+                <div class="modal fade" th:id="${'editcategory'+el.id}" role="dialog">
+                    <input type="hidden" id="id" th:value="${el.id}">
+                    <div class="modal-dialog" >
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Изменение категории</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+                                <form method="post" th:action="'/AdminCategory/CategoryEdit/'+${el.id}">
+
+                                    <input th:value="*{el.categoryName}"  type="text" placeholder="Категория"  name="categoryName" minlength="0" maxlength="70" required><br>
+
+                                    <button type="submit" class="btn btn-danger"  >Изменить категорию</button>
+
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal" th:id="${'deletecategory'+el.id}">
+
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Вы действительно хотите удалить категорию?</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+
+                                <h5 class="">
+                                    Категория
+                                </h5>
+                                <p type="text"  th:text="${el.categoryName}" > </p>
+
+                                <form method="post" th:action="'/AdminCategory/CategoryDelete/' +${el.id}">
+                                <input type="submit" class="btn btn-danger" value="Удалить"></input>
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </tr>
+        </div>
+
+
+        </tbody>
+    </table>
+
+</div>
+
+</div>
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+<!--<script type="text/javascript" src='<c:url value="/resources/js/jquery-1.9.1.js" />'></script>-->
+<!--<script type="text/javascript" src='<c:url value="/resources/js/bootstrap.js" />'></script>-->
+
+</body>
+</html>

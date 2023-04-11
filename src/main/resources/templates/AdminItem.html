@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="header :: headerAdmin"></div>
+
+
+
+<body class="bg-gray-800">
+
+<div class="container  card-body text-center  align-items-center card shadow-2-strong ">
+    <a  class="btn btn-success "   data-toggle="modal" th:data-target="${'#additem'}" > Добавить товар</a>
+    <div class="modal" id="additem">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Добавление товара</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body scroll">
+
+                    <form method="post" th:action="'/AdminItem/ItemAdd/'" id="checkDataAdd">
+                        <h3>Наименование товара </h3>
+                        <input th:field="*{item.name}"  type="text" placeholder="Наименование товара"  name="name" minlength="0" maxlength="70" required><br>
+                        <h3>Цена</h3>
+                        <input th:field="*{item.Cost}"  type="number" step="0.01" placeholder="Цена"  name="Cost" required><br>
+                        <h3>Бренд</h3>
+                        <input th:field="*{item.brand}"  type="text" placeholder="Бренд"  name="brand" minlength="0" maxlength="70" required><br>
+                        <h3>Размер</h3>
+                        <input th:field="*{item.length}"  type="number" placeholder="Размер"  name="length" max="150" min="1" required><br>
+                        <h3>Описание</h3>
+                        <input th:field="*{item.description}"  type="text" height="30" placeholder="Описание"  name="description" minlength="0" maxlength="200" ><br>
+                        <h3>Цвет</h3>
+                        <input th:field="*{item.color}"  type="text" height="30" placeholder="Цвет"  name="color" minlength="0" maxlength="70" ><br>
+                        <h3>Артикул</h3>
+                        <input th:field="*{item.articul}"  type="text"  placeholder="Артикул"  name="articul" minlength="0" maxlength="70" ><br>
+                        <h3>Профессионализм</h3>
+                        <input th:field="*{item.professionalism}"  type="text"  placeholder="Профессионализм"  name="professionalism" minlength="0" maxlength="70" required><br>
+                        <h3>Год выпуска</h3>
+                        <input th:field="*{item.releaseYear}"  type="number" minlength="4" maxlength="4" min="1900" max="2025" placeholder="Год выпуска"  name="releaseYear" required ><br>
+                        <h5 class="">
+                            Склад
+                        </h5>
+                        <select name="listStorage">
+                            <div th:each="element : ${listStorage}">
+                                <option th:value="${element.id}" th:text="${element.adresStorage}"></option>
+                            </div>
+                        </select>
+                        <h5 class="">
+                            Категория
+                        </h5>
+                        <select name="listCategory">
+                            <div th:each="element : ${listCategory}">
+                                <option th:value="${element.id}" th:text="${element.categoryName}"></option>
+                            </div>
+                        </select>
+                        <br>
+                        <button type="submit" class="btn btn-danger"  >Добавить товар</button>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <table class="table table-hover table-light">
+        <thead>
+        <tr>
+            <td>
+                Название
+
+            </td>
+            <td>
+
+                Цена
+            </td>
+
+            <td >
+
+            </td>
+            <td >
+
+            </td>
+            <td >
+
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+
+        <div  class="row form-outline" th:each="el: ${listItem}">
+            <tr>
+
+                <td > <p   th:text="${el.name}"> </p></td>
+
+                <td > <p   th:text="${el.Cost}"> </p></td>
+                <td class="col">   <a  class="btn btn-success edit"   data-toggle="modal" th:data-target="${'#infoitem'+el.id}" > Подробней</a></td>
+                <td class="col">   <a  class="btn btn-success edit"   data-toggle="modal" th:data-target="${'#edititem'+el.id}" > Изменить товар</a></td>
+
+                <td class="col">   <a  class="btn btn-warning "   data-toggle="modal" th:data-target="${'#deleteitem'+el.id}" > Удалить товар</a></td>
+
+                <div class="modal fade" th:id="${'edititem'+el.id}" role="dialog">
+                    <input type="hidden" id="id" th:value="${el.id}">
+                    <div class="modal-dialog" >
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Изменение товара</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body ">
+
+                                <form method="post" th:action="'/AdminItem/ItemEdit/'+${el.id}">
+                                    <h3>Наименование товара</h3>
+                                    <input th:value="*{el.name}"  type="text" placeholder="Наименование товара"  name="name" minlength="0" maxlength="70" required><br>
+                                    <h3>Цена</h3>
+                                    <input th:value="*{el.Cost}"  type="number" step="0.01" placeholder="Цена"  name="Cost" required><br>
+                                    <h3>Бренд</h3>
+                                    <input th:value="*{el.brand}"  type="text" placeholder="Бренд"  name="brand" minlength="0" maxlength="70" required><br>
+                                    <h3>Размер</h3>
+                                    <input th:value="*{el.length}"  type="number" placeholder="Размер"  name="length" max="150" min="1" required><br>
+                                    <h3>Описание</h3>
+                                    <input th:value="*{el.description}"  type="text" height="30" placeholder="Описание"  name="description" minlength="0" maxlength="200"  ><br>
+                                    <h3>Цвет</h3>
+                                    <input th:value="*{el.color}"  type="text" height="30" placeholder="Цвет"  name="color" minlength="0" maxlength="70" ><br>
+                                    <h3>Артикул</h3>
+                                    <input th:value="*{el.articul}"  type="text"  placeholder="Артикул"  name="articul" minlength="0" maxlength="70" ><br>
+                                    <h3>Профессионализм</h3>
+                                    <input th:value="*{el.professionalism}"  type="text"  placeholder="Профессионализм"  name="professionalism" minlength="0" maxlength="70" required><br>
+                                    <h3>Год выпуска</h3>
+                                    <input th:value="*{el.releaseYear}"  type="number" minlength="4" maxlength="4" min="1900" max="2025" placeholder="Год выпуска"  name="releaseYear" required><br>
+                                    <h5 class="">
+                                        Склад
+                                    </h5>
+                                    <select name="listStorage">
+                                        <div th:each="element : ${listStorage}">
+                                            <option th:value="${element.id}" th:text="${element.adresStorage}"></option>
+                                        </div>
+                                    </select>
+                                    <h5 class="">
+                                        Категория
+                                    </h5>
+                                    <select name="listCategory">
+                                        <div th:each="element : ${listCategory}">
+                                            <option th:value="${element.id}" th:text="${element.categoryName}"></option>
+                                        </div>
+                                    </select>
+
+
+                                    <button type="submit" class="btn btn-danger"  >Изменить товар</button>
+
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal fade" th:id="${'infoitem'+el.id}" role="dialog">
+                    <input type="hidden" id="id" th:value="${el.id}">
+                    <div class="modal-dialog" >
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Изменение товара</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body ">
+
+
+                                    <h3>Наименование товара</h3>
+                                    <p th:text="*{el.name}" ><br>
+                                    <h3>Цена</h3>
+                                    <p th:text="*{el.Cost}"  ><br>
+                                    <h3>Бренд</h3>
+                                    <p th:text="*{el.brand}"  ><br>
+                                    <h3>Размер</h3>
+                                    <p th:text="*{el.length}"   ><br>
+                                    <h3>Описание</h3>
+                                    <p th:text="*{el.description}"   ><br>
+                                    <h3>Цвет</h3>
+                                    <p th:text="*{el.color}"   ><br>
+                                    <h3>Артикул</h3>
+                                    <p th:text="*{el.articul}"   ><br>
+                                    <h3>Профессионализм</h3>
+                                    <p th:text="*{el.professionalism}" ><br>
+                                    <h3>Год выпуска</h3>
+                                    <p th:text="*{el.releaseYear}"  ><br>
+                                    <h5 class="">
+                                        Склад
+                                    </h5>
+                                <p th:text="*{el.storage.adresStorage}"  ><br>
+                                    <h5 class="">
+                                        Категория
+                                    </h5>
+                                <p th:text="*{el.category.categoryName}"  ><br>
+
+
+                                    <button type="submit" class="btn btn-danger"  >Изменить товар</button>
+
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal" th:id="${'deleteitem'+el.id}">
+
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Вы действительно хотите удалить товар?</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+                                <h5 class="">
+                                    Наименование товара
+                                </h5>
+                                <p   th:text="${el.name}"> </p>
+                                <h5 class="">
+                                    Цена
+                                </h5>
+                                <p   th:text="${el.Cost}"> </p>
+                                <h5 class="">
+                                    Артикул
+                                </h5>
+                                <p   th:text="${el.articul}"> </p>
+
+                                <form method="post" th:action="'/AdminItem/ItemDelete/' +${el.id}">
+                                    <input type="submit" class="btn btn-danger" value="Удалить"></input>
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </tr>
+        </div>
+
+
+        </tbody>
+    </table>
+
+</div>
+
+</div>
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+<!--<script type="text/javascript" src='<c:url value="/resources/js/jquery-1.9.1.js" />'></script>-->
+<!--<script type="text/javascript" src='<c:url value="/resources/js/bootstrap.js" />'></script>-->
+
+</body>
+</html>

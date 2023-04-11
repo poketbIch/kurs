@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="header :: headerClient"></div>
+<body class="bg-gray-800">
+
+<div class=" ">
+    <div class="d-flex align-items-center">
+<form class="d-flex w-full" th:action="'/ClientSearchName/'+${item.name}" method="get">
+        <i class="material-icons prefix" style=" color: ghostwhite">search</i>
+        <input type="search" id="searchName" name="name" placeholder="Поиск по Каталогу" class="form-control me-2" style="">
+        <input class="btn blue" type="submit" value="Найти" style="color: ghostwhite">
+</form>
+    </div>
+    <a href="/"> </a>
+<!--    <div class=" ml-14">-->
+
+<!--        <table class="table" style="border-collapse: separate; border-spacing: 5em;">-->
+<!--            <tbody th:each="el: ${listCategory}" id="listCategory" style="margin-top: 20px; ">-->
+<!--<tr>-->
+<!--    -->
+<!--           <a style="text-decoration: none; " class="text-white" th:href="'/ClientSearch/'+${el.categoryName}" th:text="${el.categoryName}"></a>-->
+<!--           <a style="text-decoration: none;" class="text-white" >    </a>-->
+<!--</tr>-->
+
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+    <i class="material-icons prefix" style=" color: #1f2937">search</i>
+    <button class="btn btn-secondary dropdown-toggle dropdown" type="button" data-toggle="dropdown">Найти товар по категории
+        <span class="caret"></span></button>
+    <ul class="dropdown-menu" >
+        <li th:each="el: ${listCategory}" id="listCategory">   <a style="text-decoration: none; "  th:href="'/ClientSearch/'+${el.categoryName}" th:text="${el.categoryName}"></a></li>
+
+    </ul>
+
+
+</div>
+<div class="row mb-5 text-center" >
+
+
+    <div class="col-5 themed-grid-col card shadow-3-strong container" th:each="el: ${listItem}" id="items" >
+
+
+        <!--        <div th:if="${#lists.isEmpty(el.get(5))}">-->
+        <h3>Наименование товара</h3>
+        <p th:text="*{el.name}" ><br>
+        <h3>Цена</h3>
+        <p th:text="*{el.Cost}"  ><br>
+        <h3>Бренд</h3>
+        <p th:text="*{el.brand}"  ><br>
+        <h3>Размер</h3>
+        <p th:text="*{el.length}"   ><br>
+        <h3>Описание</h3>
+        <p th:text="*{el.description}"   ><br>
+        <h3>Цвет</h3>
+        <p th:text="*{el.color}"   ><br>
+        <h3>Артикул</h3>
+        <p th:text="*{el.articul}"   ><br>
+        <h3>Профессионализм</h3>
+        <p th:text="*{el.professionalism}" ><br>
+        <h3>Год выпуска</h3>
+        <p th:text="*{el.releaseYear}"  ><br>
+        <h5 class="">
+            Склад
+        </h5>
+        <p th:text="*{el.storage.adresStorage}"  ><br>
+        <h5 class="">
+            Категория
+        </h5>
+        <p th:text="*{el.category.categoryName}"  ><br>
+
+        <div class="row mb-3 justify-content-md-center row-cols-1">
+            <div class="col-md-auto">
+
+            </div>
+<!--            <div class="col-md-auto">-->
+
+                <a  class="btn btn-danger"   data-toggle="modal" th:data-target="${'#finishorder'+el.id}" >Заказать товар</a>
+                <div class="modal" th:id="${'finishorder'+el.id}">-->
+
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form method="post" th:action="'/Client/Order/'+${el.id}">
+                                    <h3>Количество</h3>
+                                    <input th:value="*{order.amount}"  type="number" placeholder="Количество"  name="amount" min="1" required><br>
+                                    <h3>Комментарий к заказу</h3>
+                                    <input th:value="*{order.commentary}"  type="text" placeholder="Ваш комментарий"  name="commentary" minlength="0" maxlength="200"><br>
+
+                                    <button type="submit" class="btn btn-success"   >Завершить</button>
+                                </form>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!--<div class="p-4 sm:ml-64">-->
+<!--    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">-->
+<!--        <div class="grid grid-cols-3 gap-4 mb-4">-->
+<!--            <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">-->
+<!--                <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>-->
+<!--            </div>-->
+<!--            <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">-->
+<!--                <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>-->
+<!--            </div>-->
+<!--            <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">-->
+<!--                <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+</body>
+</html>

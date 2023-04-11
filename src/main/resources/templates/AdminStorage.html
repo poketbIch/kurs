@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:insert="header :: headerAdmin"></div>
+
+
+
+
+<body class="bg-gray-800">
+
+<div class="container  card-body text-center  align-items-center card shadow-2-strong ">
+    <a  class="btn btn-success "   data-toggle="modal" th:data-target="${'#addstorage'}" > Добавить склад</a>
+    <div class="modal" id="addstorage">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Добавление склада</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <form method="post" th:action="'/AdminStorage/StorageAdd/'" id="checkDataAdd">
+                        <h3>Адрес склада</h3>
+                        <input th:field="*{storage.adresStorage}"  type="text" placeholder="Адрес склада"  name="adresStorage" minlength="0" maxlength="200" required ><br>
+
+                        <h5 class="">
+                            Поставщик
+                        </h5>
+                        <select name="listSuppliers">
+                            <div th:each="element : ${listSuppliers}">
+                                <option th:value="${element.id}" th:text="${element.contactInfo}"></option>
+                            </div>
+                        </select>
+                        <br>
+                        <button type="submit" class="btn btn-danger"  >Добавить поставщика</button>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <table class="table table-hover table-light">
+        <thead>
+        <tr>
+            <td>
+                Адрес
+
+            </td>
+            <td>
+
+               Поставщик
+            </td>
+
+            <td >
+
+            </td>
+            <td >
+
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+
+        <div  class="row form-outline" th:each="el: ${listStorage}">
+            <tr>
+
+                <td > <p   th:text="${el.adresStorage}" > </p></td>
+
+                <td > <p   th:text="${el.supplier.contactInfo}"> </p></td>
+
+                <td class="col">   <a  class="btn btn-success edit"   data-toggle="modal" th:data-target="${'#editstorage'+el.id}" > Изменить склад</a></td>
+
+                <td class="col">   <a  class="btn btn-warning "   data-toggle="modal" th:data-target="${'#deletestorage'+el.id}" > Удалить склад</a></td>
+
+                <div class="modal fade" th:id="${'editstorage'+el.id}" role="dialog">
+                    <input type="hidden" id="id" th:value="${el.id}">
+                    <div class="modal-dialog" >
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Изменение склада</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+                                <form method="post" th:action="'/AdminStorage/StorageEdit/'+${el.id}">
+                                    <h3>Адрес склада</h3>
+                                    <input th:value="*{el.adresStorage}"  type="text" placeholder="Адрес склада"  name="adresStorage" minlength="0" maxlength="200" required ><br>
+                                    <h3>Контактный телефон</h3>
+                                    <select name="listSuppliers">
+                                        <div th:each="element : ${listSuppliers}">
+                                            <option th:value="${element.id}" th:text="${element.contactInfo}"></option>
+                                        </div>
+                                    </select>
+
+                                    <button type="submit" class="btn btn-danger"  >Изменить склад</button>
+
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal" th:id="${'deletestorage'+el.id}">
+
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Вы действительно хотите удалить склад?</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+                                <h5 class="">
+                                    Адрес склада
+                                </h5>
+                                <p   th:text="${el.adresStorage}"> </p>
+                                <h5 class="">
+                                    Контактное лицо
+                                </h5>
+                                <p   th:text="${el.supplier.contactInfo}"> </p>
+
+
+                                <form method="post" th:action="'/AdminStorage/StorageDelete/' +${el.id}">
+                                    <input type="submit" class="btn btn-danger" value="Удалить"></input>
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </tr>
+        </div>
+
+
+        </tbody>
+    </table>
+
+</div>
+
+</div>
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+<!--<script type="text/javascript" src='<c:url value="/resources/js/jquery-1.9.1.js" />'></script>-->
+<!--<script type="text/javascript" src='<c:url value="/resources/js/bootstrap.js" />'></script>-->
+
+</body>
+</html>
